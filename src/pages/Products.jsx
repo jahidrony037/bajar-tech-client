@@ -7,6 +7,8 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [searchText, setSearchText] = useState("");
+
   const itemsPerPage = 10;
 
   const fetchProducts = async (page) => {
@@ -26,9 +28,53 @@ const Products = () => {
     setCurrentPage(page);
   };
 
+  // console.log(searchText);
+
+  const handleSearchProducts = (text) => {
+    axios
+      .get(`https://bajar-tech-server.vercel.app/products/search?name=${text}`)
+      .then((res) => {
+        setProducts(res.data);
+      });
+  };
   return (
     <div>
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-5 justify-items-center">
+      <p className="text-center text-4xl font-bold py-5">All Products</p>
+
+      {/* search */}
+      <div>
+        <div className="form-control">
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Search by product name"
+              className="input input-bordered"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              onClick={() => handleSearchProducts(searchText)}
+              className="btn"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-5 justify-items-center mt-40">
         {products?.map((product) => (
           <Product key={product._id} product={product} />
         ))}
