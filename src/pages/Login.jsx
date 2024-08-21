@@ -1,9 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import useAuth from "./../hooks/useAuth";
 
 const Login = () => {
-  const { login } = useAuth() || {};
+  const { login, loginWithGoogle } = useAuth() || {};
 
   const navigate = useNavigate();
   const handleLogin = (e) => {
@@ -16,12 +15,26 @@ const Login = () => {
       .then((res) => {
         const user = res.user;
         if (user) {
-          toast.success("login Successful");
+          // toast.success("login Successful");
           navigate("/");
         }
       })
       .catch((err) => {
         console.log(err.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          // toast.success("login Successful");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
   };
   return (
@@ -67,6 +80,14 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
+          <div className="px-5 pb-5 max-w-sm">
+            <button
+              onClick={() => handleGoogleLogin()}
+              className="btn btn-primary btn-block"
+            >
+              Login With Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
