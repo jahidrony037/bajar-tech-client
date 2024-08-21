@@ -6,6 +6,8 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [sortBy, setSortBy] = useState("price");
+  const [order, setOrder] = useState("asc");
 
   const [searchText, setSearchText] = useState("");
 
@@ -37,6 +39,16 @@ const Products = () => {
         setProducts(res.data);
       });
   };
+
+  const handleSort = (url) => {
+    // .get(`https://bajar-tech-server.vercel.app/products/sort`)
+    axios
+      .get(`https://bajar-tech-server.vercel.app/products/sort?order=${url}`)
+      .then((res) => {
+        setProducts(res.data);
+      });
+  };
+
   return (
     <div>
       <p className="text-center text-4xl font-bold py-5">All Products</p>
@@ -72,6 +84,34 @@ const Products = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Sorting Dropdown */}
+      <div className="dropdown dropdown-hover">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn m-1 bg-primary hover:bg-primary text-white"
+        >
+          Sort by Price
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content z-[1] menu p-2 pl-0 bg-base-100 rounded-box w-52 space-y-2"
+        >
+          <li
+            className="btn hover:bg-primary hover:text-[#FFFF]"
+            onClick={() => handleSort("asc")}
+          >
+            Low to High
+          </li>
+          <li
+            className="btn hover:bg-primary hover:text-[#FFFF]"
+            onClick={() => handleSort("desc")}
+          >
+            High to Low
+          </li>
+        </ul>
       </div>
 
       <div className="grid md:grid-cols-3 grid-cols-1 gap-5 justify-items-center mt-40">
