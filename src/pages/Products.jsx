@@ -6,8 +6,6 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [sortBy, setSortBy] = useState("price");
-  const [order, setOrder] = useState("asc");
 
   const [searchText, setSearchText] = useState("");
 
