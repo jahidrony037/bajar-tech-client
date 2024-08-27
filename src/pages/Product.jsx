@@ -12,6 +12,7 @@ const Product = ({ product }) => {
         <p>{product?.description}</p>
         <p>Price: ${product?.price}</p>
         <p>Category: {product?.category}</p>
+        <p>Brand: {product?.brand}</p>
         <p>Rating: {product?.ratings} ⭐</p>
         <div className="card-actions justify-end">
           <button className="btn btn-primary">Buy Now</button>

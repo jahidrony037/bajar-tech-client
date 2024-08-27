@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Filter from "../components/Filter";
 import Pagination from "./pagination/Pagination";
 import Product from "./Product";
 const Products = () => {
@@ -10,6 +11,9 @@ const Products = () => {
   const [searchText, setSearchText] = useState("");
 
   const itemsPerPage = 10;
+
+  const [filters, setFilters] = useState({});
+  // console.log(filters);
 
   const fetchProducts = async (page) => {
     const response = await axios.get(
@@ -45,6 +49,29 @@ const Products = () => {
       .then((res) => {
         setProducts(res.data);
       });
+  };
+
+  const fetchData = async (filters) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/filters/products",
+        {
+          params: filters,
+        }
+      );
+      setProducts(response.data);
+      // console.log(response);
+    } catch (error) {
+      console.log("Error Fetching ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(filters);
+  }, [filters]);
+
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters);
   };
 
   return (
@@ -112,10 +139,17 @@ const Products = () => {
         </ul>
       </div>
 
+      {/* Filter Products */}
+      <Filter onFilter={handleFilter} />
+
       <div className="grid md:grid-cols-3 grid-cols-1 gap-5 justify-items-center mt-40">
-        {products?.map((product) => (
-          <Product key={product._id} product={product} />
-        ))}
+        {products.length ? (
+          products?.map((product) => (
+            <Product key={product._id} product={product} />
+          ))
+        ) : (
+          <p className="text-primary font-bold text-4xl">no Data Found</p>
+        )}
       </div>
       <Pagination
         currentPage={currentPage}
