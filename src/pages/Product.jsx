@@ -14,6 +14,7 @@ const Product = ({ product }) => {
         <p>Category: {product?.category}</p>
         <p>Brand: {product?.brand}</p>
         <p>Rating: {product?.ratings} ⭐</p>
+        <p>Date: {product?.createDate}</p>
         <div className="card-actions justify-end">
           <button className="btn btn-primary">Buy Now</button>
         </div>

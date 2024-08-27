@@ -26,7 +26,7 @@ const Filter = ({ onFilter }) => {
             <input
               type="text"
               value={brand}
-              placeholder="Type BrandName"
+              placeholder="Type BrandName Ex: Asus"
               className="input input-bordered input-info w-full max-w-xs "
               onChange={(e) => setBrand(e.target.value)}
             />
@@ -43,7 +43,7 @@ const Filter = ({ onFilter }) => {
             <input
               type="text"
               value={category}
-              placeholder="Type Category"
+              placeholder="Type Category Ex: Laptop"
               className="input input-bordered input-info w-full max-w-xs"
               onChange={(e) => setCategory(e.target.value)}
             />

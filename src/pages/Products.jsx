@@ -51,10 +51,21 @@ const Products = () => {
       });
   };
 
+  const handleSortByDate = (key) => {
+    axios
+      // .get(`http://localhost:5000/products/dateSort?order=${key}`)
+      .get(
+        `https://bajar-tech-server.vercel.app/products/dateSort?order=${key}`
+      )
+      .then((res) => {
+        setProducts(res.data);
+      });
+  };
+
   const fetchData = async (filters) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/filters/products",
+        "https://bajar-tech-server.vercel.app/filters/products",
         {
           params: filters,
         }
@@ -135,6 +146,34 @@ const Products = () => {
             onClick={() => handleSort("desc")}
           >
             High to Low
+          </li>
+        </ul>
+      </div>
+
+      {/* Sorting Dropdown by date */}
+      <div className="dropdown dropdown-hover">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn m-1 bg-primary hover:bg-primary text-white"
+        >
+          Sort by Date
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content z-[1] menu p-2 pl-0 bg-base-100 rounded-box w-52 space-y-2"
+        >
+          <li
+            className="btn hover:bg-primary hover:text-[#FFFF]"
+            onClick={() => handleSortByDate(1)}
+          >
+            Ascending Order
+          </li>
+          <li
+            className="btn hover:bg-primary hover:text-[#FFFF]"
+            onClick={() => handleSortByDate(-1)}
+          >
+            Descending Order
           </li>
         </ul>
       </div>
